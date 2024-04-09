@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<title>即時戰績表格</title>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="myscript/css/animate.css">
+<style>
+#overlay{
+        opacity: 0.8;
+        background-color: black;
+        width: 50%;
+        height: 50%;
+        position: absolute;
+        color:white;
+        margin-left:432px;
+        margin-top:250px;
+        text-align:center;
+        border-radius: 35px;
+        border-color: #55b1e4;
+        border-width:5px;
+        border-style:solid;
+}
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+/*1. 0-100% ： 在時間的幾%時為何種css樣式。*/
+@keyframes blinker {
+  50% {
+    opacity: 0;
+	color: red;
+  }
+}
+#WHOLE_TITLE_COL{
+	/*For animation change color effect.*/
+	background: linear-gradient(271deg, #1c896d, #1c4289);
+	background-size: 400% 400%;
+	-webkit-animation: Change_color 11s ease infinite;
+	-moz-animation: Change_color 11s ease infinite;
+	animation: Change_color 11s ease infinite;
+	
+	/*For texture effect.*/
+	/*background-color: rgba(63,174,191, 1);*/
+	/*background-image: url(/dashboard/images/soga/black-linen.png);	*/
+	color:white;
+	font-weight:1000;
+	font-size:20px;
+	text-align:center;
+	
+}
+@-webkit-keyframes Change_color {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes Change_color {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes Change_color {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+.RECORD_HEADER_COL{
+	/*background-color: #717502;
+	background-image: url(/dashboard/images/soga/black-linen.png);	*/
+	
+	background-color: #002247;
+	background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+	color:white;
+	font-weight:1000;
+	font-size:18px;
+	text-align:center;
+	
+}
+a{
+	display:block;
+	text-align:center;
+}
+.RECORD_PLAYER_COL{
+	/*background-color: rgba(104,104,104, 1); 
+	background-color: #000000;
+	background-image: url(/dashboard/images/soga/ecailles.png);	
+	background-repeat:repeat;*/
+	
+	/*background-color: #007982;
+	background-image: url("https://www.transparenttextures.com/patterns/crisp-paper-ruffles.png");*/
+	
+	/*background-color: #c5d4db;
+	background-image: url("https://www.transparenttextures.com/patterns/argyle.png");
+	*/
+	
+	background-color: #a1aab3;
+	background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+	background-color: #a1aab3;
+	background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-dark.png");
+	opacity: 0.6;
+	padding:0px;
+	color:white;
+	font-size:22px;
+	font-weight:1000;
+}
+.container-fluid{
+	padding:10%;
+
+}
+.img_UP,.img_DOWN{
+	width:47%;
+	height:65%;
+}
+.div_img{
+	text-align:right;
+	padding:0px;
+}
+/*.RECORD_PLAYER_ROW::before{
+	background-image:url('images/soga/up-arrow.png');
+	background-size: 10px 20px;
+	display: inline-block;
+	width: 10px; 
+	height: 20px;
+	content:"";
+}*/
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="myscript/js/global_func.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script> 
+var table_height=70;
+var FLASH_TIME=6000;
+var GET_FREQUENCY=10000;
+var table_start_top=117;
+var SCRIPT_RESUME_STATUS="/dashboard/myscript/resume_status.php";
+var Old_record;
+var New_record;
+var diff_obj={};
+var Rank_change={};
+var i=0;
+var col_height,col_width;
+//var img_UP='images/soga/upward.png';
+//var img_DOWN='images/soga/downward.png';
+
+var img_UP='images/soga/up-arrow.png';
+var img_DOWN='images/soga/down-arrow.png';
+var ranking={
+		"1":(1*table_height+table_start_top).toString()+"px",
+		"2":(2*table_height+table_start_top).toString()+"px",
+		"3":(3*table_height+table_start_top).toString()+"px",
+		"4":(4*table_height+table_start_top).toString()+"px",
+		"5":(5*table_height+table_start_top).toString()+"px",
+		"6":(6*table_height+table_start_top).toString()+"px",
+		"7":(7*table_height+table_start_top).toString()+"px",
+		"8":(8*table_height+table_start_top).toString()+"px",
+		"9":(9*table_height+table_start_top).toString()+"px",
+		"10":(10*table_height+table_start_top).toString()+"px",
+		"11":(11*table_height+table_start_top).toString()+"px"
+	};
+
+function isEmpty(obj) {
+
+    // null and undefined are "empty"
+    if (obj == null) return true;
+
+    // Assume if it has a length property with a non-zero value
+    // that that property is correct.
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+
+    // If it isn't an object at this point
+    // it is empty, but it can't be anything *but* empty
+    // Is it empty?  Depends on your application.
+    if (typeof obj !== "object") return true;
+
+    // Otherwise, does it have any properties of its own?
+    // Note that this doesn't handle
+    // toString and valueOf enumeration bugs in IE < 9
+    for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+
+    return true;
+}
+function update_table(){
+	var animate_type="fadeInDown";
+	col_height=$('.RECORD_PLAYER_COL').css('height');
+	col_width =$('.RECORD_PLAYER_COL').css('width');
+	$.each(New_record, function(new_key, new_value) {
+		console.log($('.RECORD_PLAYER_ROW').eq(index).children().eq(0));
+		
+		var index=new_value.new_rank-1;
+		$('.RECORD_PLAYER_ROW').eq(index).children().css('height',col_height).css('width',col_width).each(function(){$(this).find('a').text("");});
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(1).attr('id',"RECORD_"+new_key+"_COL_PLAYER");
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(2).attr('id',"RECORD_"+new_key+"_COL_POINT");
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(3).attr('id',"RECORD_"+new_key+"_COL_ZHMO");
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(4).attr('id',"RECORD_"+new_key+"_COL_HU");
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(5).attr('id',"RECORD_"+new_key+"_COL_GUN");
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(6).attr('id',"RECORD_"+new_key+"_COL_JIANG");
+		
+		
+		//console.log($($('.RECORD_PLAYER_ROW').eq(index).children().find('a').eq(0)))	;
+		
+		
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(1).find('a').attr('id',"text_"+new_value.name+"_name").text(new_value.name);
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(2).find('a').attr('id',"text_"+new_value.name+"_point").text(new_value.point);
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(3).find('a').attr('id',"text_"+new_value.name+"_zhmo").text(new_value.zhmo);
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(4).find('a').attr('id',"text_"+new_value.name+"_hu").text(new_value.hu);
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(5).find('a').attr('id',"text_"+new_value.name+"_gun").text(new_value.gun);
+		$('.RECORD_PLAYER_ROW').eq(index).children().eq(6).find('a').attr('id',"text_"+new_value.name+"_playjiang").text(new_value.playjiang);
+		
+		$('.RECORD_PLAYER_ROW').eq(index).attr('name',new_key).attr('id','RECORD_'+new_key+'_ROW').attr('value',new_value.new_rank).addClass('modified');
+		//console.log($('.RECORD_PLAYER_ROW'));
+	});	
+	//console.log($('a'));
+	//console.log($('.RECORD_PLAYER_ROW').not('.modified'));
+	$('.RECORD_PLAYER_ROW').not('.modified').fadeOut(800, function() { $(this).remove(); });;
+	$('.RECORD_PLAYER_ROW').removeClass('modified animated '+animate_type+'');
+	
+}
+function Initial_record_table(){
+
+	$('div.container-fluid').append('<div class="row" id="WHOLE_TITLE_ROW"></div>');
+	$('#WHOLE_TITLE_ROW').append('<div class="col-md-1"></div><div class="col-md-6" id="WHOLE_TITLE_COL"></div>');
+	$('#WHOLE_TITLE_COL').text("即時戰績");
+	$('#WHOLE_TITLE_ROW').after("<div id='RECORD_HEADER_ROW'  class='row'><div class='col-md-1 div_img'></div><div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_PLAYER' >玩家</div><div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_POINT' >計分</div><div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_ZHMO' >自摸</div><div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_HU' >胡牌</div><div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_GUN' >放槍</div><div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_JIANG' >將數</div></div>");
+}	
+function Create_first_record(new_obj){
+	var i=1;
+	$.each(new_obj, function(new_key, new_value) {	
+		new_value.old_rank=i;
+		new_value.new_rank=i;
+		$('.row:last').after("<div name="+new_key+" id='RECORD_"+new_key+"_ROW'  class='row RECORD_PLAYER_ROW ' value="+new_value.new_rank+"><div class='col-md-1 div_img'><img class='img_UP' src='"+img_UP+"'></img><img class='img_DOWN' src='"+img_DOWN+"'></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_PLAYER' ><a id='text_"+new_value.name+"_name'>"+new_key+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_POINT' ><a id='text_"+new_value.name+"_point'>"+new_value.point+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_ZHMO' ><a id='text_"+new_value.name+"_zhmo'>"+new_value.zhmo+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_HU' ><a id='text_"+new_value.name+"_hu'>"+new_value.hu+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_GUN' ><a id='text_"+new_value.name+"_gun'>"+new_value.gun+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_JIANG' ><a id='text_"+new_value.name+"_playjiang'>"+new_value.playjiang+"</a></div></div>");
+		
+		$('.img_DOWN,.img_UP').hide()
+		//update_table();
+		$("div[name='"+new_key+"']").hide();
+		setTimeout(function(){
+			$("div[name='"+new_key+"']").fadeIn();
+		},i*200);
+		i++;
+	});
+	
+	
+}
+
+function confirm_player_and_check_diff(old_obj,new_obj){
+	var diff_obj={};
+	Rank_change={};
+	$.each(new_obj, function(new_key, new_value) {
+		//$('.container').children('[name="ㄅㄅ"]').children('#RECORD_ㄅㄅ_COL_PLAYER').text()
+		console.log(new_key);
+		var get_player_name_from_table=$("#text_"+new_key+"_name").text();
+		var get_player_name_from_server=new_key;
+		var get_player_point_from_table=parseInt($("#text_"+new_key+"_point").text());
+		var get_player_point_from_server=parseInt(new_value.point);
+		
+		
+		if(get_player_name_from_table==""){
+			console.log("Player "+get_player_name_from_server+ " is new friend.");
+			var tbl_idx=new_value.new_rank-1;
+			if (tbl_idx==0)
+				$('#RECORD_HEADER_ROW').after("<div name="+new_key+" id='RECORD_"+new_key+"_ROW'  class='row RECORD_PLAYER_ROW' value="+new_value.new_rank+"><div class='col-md-1 div_img'><img class='img_UP' src='"+img_UP+"'></img><img class='img_DOWN' src='"+img_DOWN+"'></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_PLAYER' ><a id='text_"+new_value.name+"_name'>"+new_key+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_POINT' ><a id='text_"+new_value.name+"_point'>"+new_value.point+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_ZHMO' ><a id='text_"+new_value.name+"_zhmo'>"+new_value.zhmo+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_HU' ><a id='text_"+new_value.name+"_hu'>"+new_value.hu+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_GUN' ><a id='text_"+new_value.name+"_gun'>"+new_value.gun+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_JIANG' ><a id='text_"+new_value.name+"_playjiang'>"+new_value.playjiang+"</a></div></div>");
+			else{
+				$("div[value='"+tbl_idx+"']").eq(0).after("<div name="+new_key+" id='RECORD_"+new_key+"_ROW'  class='row RECORD_PLAYER_ROW' value="+new_value.new_rank+"><div class='col-md-1 div_img'><img class='img_UP' src='"+img_UP+"'></img><img class='img_DOWN' src='"+img_DOWN+"'></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_PLAYER' ><a id='text_"+new_value.name+"_name'>"+new_key+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_POINT' ><a id='text_"+new_value.name+"_point'>"+new_value.point+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_ZHMO' ><a id='text_"+new_value.name+"_zhmo'>"+new_value.zhmo+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_HU' ><a id='text_"+new_value.name+"_hu'>"+new_value.hu+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_GUN' ><a id='text_"+new_value.name+"_gun'>"+new_value.gun+"</a></div><div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+new_key+"_COL_JIANG' ><a id='text_"+new_value.name+"_playjiang'>"+new_value.playjiang+"</a></div></div>");
+
+			}
+			$("div[value='"+tbl_idx+"']").hide().fadeIn();
+			$("div[name='"+new_key+"']").attr('value',(new_value.new_rank));
+			
+			return;
+		}
+		if(get_player_point_from_table!=get_player_point_from_server){
+			console.log("Player "+new_key+ " has different point. from table"+get_player_point_from_table+" get_player_point_from_server:"+get_player_point_from_server);
+			diff_obj[new_key]=new_obj[new_key];
+		}
+		
+		if(new_value.new_rank!=new_value.old_rank){
+			console.log(new_key+" rank change");
+			Rank_change[new_key]=new_obj[new_key];
+		}
+		
+	});
+	return diff_obj;
+};
+function flashing_the_diff_portion_and_Move_animation(diff_obj){
+	$("div").removeClass("blink_me");
+	$.each(diff_obj, function(diff_key, diff_value) {
+		//flash the different point player.
+		$("div[name='"+diff_key+"']").toggleClass('blink_me');
+	});
+	
+	$.each(Rank_change, function(r_key, r_value) {
+		//Show up the arrow on rank change player. 
+		//$("div[name='w']").eq(0).find('.img_UP').fadeIn()
+		//$("div[name='"+diff_key+"']").eq(0);
+	});
+	setTimeout(function(){
+		console.log($('.RECORD_PLAYER_ROW'));
+		diff_obj=sort_record_by_point(diff_obj);
+	
+		update_table();
+		$('.RECORD_PLAYER_ROW').removeClass('blink_me');
+		console.log($('.RECORD_PLAYER_ROW'));
+		
+
+	},FLASH_TIME);
+}
+function get_record(){
+	$.ajax({
+		url:SCRIPT_RESUME_STATUS,
+		type: "GET",
+		success:function(data){
+			
+			Old_record=New_record;
+			
+			data_arr=data.split("&");
+			New_record=JSON.parse(data_arr[0]);
+			New_record=sort_record_by_point(New_record);
+			console.log(Old_record);
+			console.log(New_record);
+			if(typeof(Old_record)!='object'){
+				Create_first_record(New_record);
+				console.log($('.RECORD_PLAYER_ROW'));
+				console.log("First create.");
+				return;
+			}
+			i=1;
+			$.each(New_record, function(key, value) {
+				New_record[key].new_rank=i;
+				if(Old_record.hasOwnProperty(key)){
+					New_record[key].old_rank=Old_record[key].new_rank;
+				}else{
+					New_record[key].old_rank=i;
+				}
+				i++;
+			});
+			
+			diff_obj=confirm_player_and_check_diff(Old_record,New_record);
+			if(isEmpty(diff_obj)==true){
+				console.log("No change.");
+				update_table();
+				return;
+			}else{
+				//There are differents between two objects.
+				flashing_the_diff_portion_and_Move_animation(diff_obj);
+			}
+		}, 
+		error: function(xhr, status, error) {
+		  console.log(xhr);
+		  console.log(status);
+		  console.log(error);
+		}
+	});
+};
+$(document).ready(function(){
+
+	
+	Initial_record_table();	
+	get_record();
+	//setInterval(function(){
+	//	get_record();
+	//},GET_FREQUENCY);
+	
+});
+</script> 
+</head>
+
+<body>
+<div class="container-fluid">
+  <!--<div class="row">
+    	<div class="col-md-7">
+      One of three columns
+    </div>
+    	<div class="col-md-7">
+      One of three columns
+    </div>
+    	<div class="col-md-7">
+      One of three columns
+    </div>
+  </div>-->
+</div>
+</body>
+</html>

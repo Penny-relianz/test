@@ -1,0 +1,49 @@
+#分數平均
+select name,CAST(point AS float)/"將數" from soga_record;
+
+#平均自摸排行
+select name,CAST("自摸" AS float)/"將數" as a from soga_record order by a desc;
+
+
+
+#多了一段
+UPDATE soga_record SET "自摸"="自摸"-7 WHERE name="兒兒";
+UPDATE soga_record SET "自摸"="自摸"-6 WHERE name="碰碰";
+UPDATE soga_record SET "自摸"="自摸"-1 WHERE name="國國";
+UPDATE soga_record SET "自摸"="自摸"-8 WHERE name="榮恩";
+UPDATE soga_record SET "自摸"="自摸"-1 WHERE name="陳盯";
+UPDATE soga_record SET "自摸"="自摸"-13 WHERE name="睿神";
+
+
+
+UPDATE soga_record SET "自摸"="自摸"+15 WHERE name="菜狗";
+UPDATE soga_record SET "自摸"="自摸"+8 WHERE name="鮪魚";
+UPDATE soga_record SET "自摸"="自摸"+2 WHERE name="陳盯";
+UPDATE soga_record SET "自摸"="自摸"+9 WHERE name="羊肉";
+UPDATE soga_record SET "自摸"="自摸"+8 WHERE name="爸寶";
+UPDATE soga_record SET "胡牌"="胡牌"+14 WHERE name="菜狗";
+UPDATE soga_record SET "胡牌"="胡牌"+21 WHERE name="鮪魚";
+UPDATE soga_record SET "胡牌"="胡牌"+2 WHERE name="陳盯";
+UPDATE soga_record SET "胡牌"="胡牌"+21 WHERE name="羊肉";
+UPDATE soga_record SET "胡牌"="胡牌"+9 WHERE name="爸寶";
+UPDATE soga_record SET "放槍"="放槍"+14 WHERE name="菜狗";
+UPDATE soga_record SET "放槍"="放槍"+11 WHERE name="鮪魚";
+UPDATE soga_record SET "放槍"="放槍"+5 WHERE name="陳盯";
+UPDATE soga_record SET "放槍"="放槍"+19 WHERE name="羊肉";
+UPDATE soga_record SET "放槍"="放槍"+18 WHERE name="爸寶";
+UPDATE soga_record SET "被摸"="被摸"+27 WHERE name="菜狗";
+UPDATE soga_record SET "被摸"="被摸"+34 WHERE name="鮪魚";
+UPDATE soga_record SET "被摸"="被摸"+4 WHERE name="陳盯";
+UPDATE soga_record SET "被摸"="被摸"+33 WHERE name="羊肉";
+UPDATE soga_record SET "被摸"="被摸"+28 WHERE name="爸寶";
+UPDATE soga_record SET "將數"="將數"+5 WHERE name="菜狗";
+UPDATE soga_record SET "將數"="將數"+5 WHERE name="鮪魚";
+UPDATE soga_record SET "將數"="將數"+1 WHERE name="陳盯";
+UPDATE soga_record SET "將數"="將數"+5 WHERE name="羊肉";
+UPDATE soga_record SET "將數"="將數"+4 WHERE name="爸寶";
+UPDATE soga_record SET "POINT"="POINT"+104 WHERE name="菜狗";
+UPDATE soga_record SET "POINT"="POINT"+9 WHERE name="鮪魚";
+UPDATE soga_record SET "POINT"="POINT"+0 WHERE name="陳盯";
+UPDATE soga_record SET "POINT"="POINT"-49 WHERE name="羊肉";
+UPDATE soga_record SET "POINT"="POINT"-64 WHERE name="爸寶";
+

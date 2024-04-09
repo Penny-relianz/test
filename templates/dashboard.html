@@ -1,0 +1,221 @@
+
+<html>
+<title>SOGA麻將-記分板</title>
+<head>
+	<meta charset="UTF-8">
+        <!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<!--<script type="text/javascript" src="myscript/js/json2.js"></script>-->
+	<!--<script type="text/javascript" src="myscript/js/global_func.js"></script>-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <script type="text/javascript" src="/static/js/common/common.js"></script>
+        <script type="text/javascript" src="/static/js/restore.js"></script>
+	<script type="text/javascript" src="/static/js/newjiang.js"></script>
+	<script type="text/javascript" src="/static/js/action.js"></script>
+        <script type="text/javascript" src="/static/js/clear_all.js"></script>
+		<script type="text/javascript" src="/static/js/clear_last.js"></script>
+        <script type="text/javascript" src="/static/js/excel_save.js"></script>
+	<script>
+		var gs
+		var socket = io.connect('http://' + document.domain + ':' + location.port);
+		var cur_state={}
+		$( document ).ready(function() {
+			cur_state.liang=0;
+			cur_state.fong_idx=0;
+			request_restore();
+                        socket_init();
+			jiang_btn_init();
+                        log_table_init();
+                        action_btn_init();
+                        clear_all_btn_init();
+                        clear_last_btn_init();
+                        Excel_save_btn_init();
+			console.log( "ready!" );
+		});		
+	</script>
+</head>
+<body >
+	<div class="container ">
+		<hr>
+		<div id='divHeader' class="row">
+			<div class="col-md-2">
+				<input type="button" id="btnClear_last" class="btn btn-primary active" value="清除最後一筆">
+			</div>
+			<div class="col-md-2">
+				<input type="button" id="btnClear_all" class="btn btn-primary active" value="清除記錄表格">
+			</div>
+                        <div class="col-md-2">
+				<input type="button" id="btnExcel_save" class="btn btn-primary active" value="登入EXCEL">
+			</div>
+			<!--<div class="col-md-2">
+				<input type="button" id="btnResume" class="btn btn-primary" value="恢復目前伺服器狀態">
+			</div>-->
+			<div class="col-md-6">
+			</div>
+		</div>
+		<br>
+		<div id='divHeader' class="row" >
+				<div class="col-md-2">
+					<h2><span class="badge badge-pill badge-info">東位</span></h2><input placeholder="輸入東位玩家" type="text" class='player_on_the_ground_input' id="p_dong"></input>
+				</div>
+				<div class="col-md-2">
+					<h2><span class="badge badge-pill badge-info">南位</span></h2><input placeholder="輸入南位玩家" type="text" class='player_on_the_ground_input' id="p_nan"></input>
+				</div>
+				<div class="col-md-2">
+					<h2><span class="badge badge-pill badge-info">西位</span></h2><input placeholder="輸入西位玩家" type="text" class='player_on_the_ground_input' id="p_si"></input>
+				</div>
+				<div class="col-md-2">
+					<h2><span class="badge badge-pill badge-info">北位</span></h2><input placeholder="輸入北位玩家" type="text" class='player_on_the_ground_input' id="p_bai"></input>
+				</div>
+			<div class="col-md-4">
+				
+				<!--<input type="button" id="btnChangeplayer_on_the_ground" class="btn btn-primary" value="換人" >-->
+				<h2><span class="badge badge-pill badge-info">起莊</span></h2>
+				<select id="selLocation" class="custom-select" >
+					<option value=0>錄影</option>
+					<option value=1>錄影下家</option>
+					<option value=2>錄影對家</option>
+					<option value=3>錄影上家</option>
+				</select>
+				<input type="button" id="btnNew4" class="btn btn-primary non_playing" circle=4 value="一將" >
+				<input type="button" id="btnNew2" class="btn btn-primary non_playing" circle=2 value="中發" >
+				<input type="button" id="btnNew1" class="btn btn-primary non_playing" circle=1 value="一圈" >
+			</div>
+			
+		</div>		
+		<br>
+                
+		<div id='divHeader' class="row ">
+			<div class="col-md-4">
+				<table id="tblSelHUGUN" class="table" style="text-align: center;">
+				  <thead style="background-color:#17a2b8; font-size:24px;">
+					<tr>
+					  <th scope="col">胡牌</th>
+					  <th scope="col">放槍</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					
+				  </tbody>
+				</table>
+			</div>
+			<div class="col-md-7">
+				<span id="FONG_IDX_title" class="badge badge-pill badge-dark" style="font-size:24px;"><a id='title_giang'></a><a id="title_lieng"></a></span>
+				<h2><span class="badge badge-pill badge-info">台數</span>
+				<select id="selTai" class="custom-select" >
+					<option value=0>0</option>
+					<option value=1>1</option>
+					<option value=2>2</option>
+					<option value=3>3</option>
+					<option value=4>4</option>
+					<option value=5>5</option>
+					<option value=6>6</option>
+					<option value=7>7</option>
+					<option value=8>8</option>
+					<option value=9>9</option>
+					<option value=10>10</option>
+					<option value=11>11</option>
+					<option value=12>12</option>
+					<option value=13>13</option>
+					<option value=14>14</option>
+					<option value=15>15</option>
+					<option value=16>16</option>
+					<option value=17>17</option>
+					<option value=18>18</option>
+					<option value=19>19</option>
+					<option value=20>20</option>
+					<option value=21>21</option>
+					<option value=22>22</option>
+					<option value=23>23</option>
+					<option value=24>24</option>
+					<option value=25>25</option>
+					<option value=26>26</option>
+					<option value=27>27</option>
+					<option value=28>28</option>
+					<option value=29>29</option>
+					<option value=30>30</option>
+				</select>
+				</h2>
+				<br>
+				<div class="btn-group btn-group-lg">
+					<input type="button" id="btnHU" class="btn btn-success btn-md disabled playing do_action"  disabled  value="胡">
+					<input type="button" id="btnZHMO" class="btn btn-success btn-md disabled playing do_action" disabled value="自摸">
+					<input type="button" id="btnCHAW" class="btn btn-warning btn-md disabled playing do_action" disabled value="臭莊">
+					<input type="button" id="btnZAHU" class="btn btn-danger btn-md disabled playing do_action"  disabled value="詐胡">
+					<input type="button" id="btnPONG" class="btn btn-Info btn-md disabled playing do_action"  disabled value="喊碰不碰">
+					<input type="button" id="btnTHREEPONG" class="btn btn-danger btn-md disabled playing do_action"  disabled value="三響-1">
+					<!--<input type="button" id="btnZHMO_NO" class="btn btn-success btn-md disabled playing do_action" disabled value="連莊不放豆子">-->
+				</div>
+				<p style='font-weight:bold;'>
+				{操作說明}<br>
+				-自摸不用算莊家台&nbsp;&nbsp;&nbsp;Example&nbsp;:&nbsp;連1自摸4台->點自摸1台即可<br>
+				-胡牌要算莊家台&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example&nbsp;:&nbsp;莊家胡&nbsp;&nbsp;[連二,北風,中洞].7台->請點胡7台
+				</p>
+			</div>
+			
+		</div>
+		<br>
+		
+                <div id='divHeader' class="row">
+			<div class="col-md-8">
+				<span class="badge badge-pill badge-Dark">快捷</span>
+				<div class="btn-group btn-group-lg">
+					<input type="button" id="btnHU0" tai=0 class="btn btn-success btn-md disabled playing do_action"  disabled  value="胡0台">
+					<input type="button" id="btnHU1" tai=1 class="btn btn-Info btn-md disabled playing do_action" disabled value="胡1台">
+					<input type="button" id="btnHU2" tai=2 class="btn btn-success btn-md disabled playing do_action" disabled value="胡2台">
+					<input type="button" id="btnHU3" tai=3 class="btn btn-Info btn-md disabled playing do_action"  disabled value="胡3台">
+					<input type="button" id="btnHU4" tai=4 class="btn btn-success btn-md disabled playing do_action"  disabled value="胡4台">
+					<input type="button" id="btnHU5" tai=5 class="btn btn-Info btn-md disabled playing do_action"  disabled value="胡5台">
+					<input type="button" id="btnHU6" tai=6 class="btn btn-success btn-md disabled playing do_action"  disabled value="胡6台">
+					<input type="button" id="btnHU7" tai=7 class="btn btn-Info btn-md disabled playing do_action"  disabled value="胡7台">
+					<input type="button" id="btnHU8" tai=8 class="btn btn-success btn-md disabled playing do_action"  disabled value="胡8台">
+				</div>
+			</div>
+		</div>
+		<br>
+		<div id='divHeader' class="row">
+			<div class="col-md-8">
+				<span class="badge badge-pill badge-Dark">快捷</span>
+				<div class="btn-group btn-group-lg">
+					<input type="button" id="btnZHMO1" tai=1 class="btn btn-Warning btn-md disabled playing do_action"  disabled  value="摸1台">
+					<input type="button" id="btnZHMO2" tai=2 class="btn btn-Danger btn-md disabled playing do_action" disabled value="摸2台">
+					<input type="button" id="btnZHMO3" tai=3 class="btn btn-Warning btn-md disable playing do_action" disabled value="摸3台">
+					<input type="button" id="btnZHMO4" tai=4 class="btn btn-Danger btn-md disabled playing do_action"  disabled value="摸4台">
+					<input type="button" id="btnZHMO5" tai=5 class="btn btn-Warning btn-md disabled playing do_action"  disabled value="摸5台">
+					<input type="button" id="btnZHMO6" tai=6 class="btn btn-Danger btn-md disabled playing do_action"  disabled value="摸6台">
+					<input type="button" id="btnZHMO7" tai=7 class="btn btn-Warning btn-md disabled playing do_action"  disabled value="摸7台">
+					<input type="button" id="btnZHMO8" tai=8 class="btn btn-Danger btn-md disabled playing do_action"  disabled value="摸8台">
+					<input type="button" id="btnZHMO9" tai=9 class="btn btn-Warning btn-md disabled playing do_action"  disabled value="摸9台">
+				</div>
+			</div>
+		</div>
+		<hr>
+		
+		<div id='divHeader' class="row">
+			<div class='divtbl col-md-7'>
+				<table id="tblShowDetail" class="table table-hover" border="1">
+				<thead id="LOG_TABLE_THEAD" class="thead-light">	
+					 <tr><th id='LOG_DATE' colspan="5">LOG</th></tr>
+				</thead>	
+				<tbody>
+					<tr></tr>
+				</tbody>
+				</table>
+			</div>
+			<div class='divtbl col-md-5'>
+				<table id="tblPlyerRecord"  class="table table-hover" border="1">
+				<thead class="thead-light">	
+					 <tr><th id='current_record'>玩家</th><th id='record_point' colspan="">戰績</th><th id='record_point' colspan="">自摸</th><th id='record_point' colspan="">胡牌</th><th id='record_point' colspan="">放槍</th><th id='record_playjiang' colspan="">將數</th></tr>
+				</thead>	
+				<tbody>
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

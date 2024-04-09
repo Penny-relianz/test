@@ -1,0 +1,1045 @@
+<html>
+<title>SOGA麻將-OBS版面</title>
+<head>
+	<meta charset="utf-8">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<style>
+        
+        .blink_me {
+          animation: blinker 1s linear infinite;
+        }
+        
+        /*1. 0-100% ： 在時間的幾%時為何種css樣式。*/
+        @keyframes blinker {
+          50% {
+            opacity: 0;
+                color: red;
+          }
+        }
+        #WHOLE_TITLE_COL{
+                /*For animation change color effect.*/
+                background: linear-gradient(271deg, #1c896d, #1c4289);
+                background-size: 400% 400%;
+                -webkit-animation: Change_color 11s ease infinite;
+                -moz-animation: Change_color 11s ease infinite;
+                animation: Change_color 11s ease infinite;
+                
+                /*For texture effect.*/
+                /*background-color: rgba(63,174,191, 1);*/
+                /*background-image: url(/dashboard/images/soga/black-linen.png);	*/
+                color:white;
+                font-weight:1000;
+                font-size:20px;
+                text-align:center;
+                
+        }
+        @-webkit-keyframes Change_color {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+        @-moz-keyframes Change_color {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+        @keyframes Change_color {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+        .RECORD_HEADER_COL{
+                /*background-color: #717502;
+                background-image: url(/dashboard/images/soga/black-linen.png);	*/
+                
+                background-color: #002247;
+                background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+                color:white;
+                font-weight:500;
+                font-size:30px;
+                text-align:center;
+                
+        }
+        a{
+                display:block;
+                text-align:center;
+        }
+        .RECORD_PLAYER_COL{
+                /*background-color: rgba(104,104,104, 1); 
+                background-color: #000000;
+                background-image: url(/dashboard/images/soga/ecailles.png);	
+                background-repeat:repeat;*/
+                
+                /*background-color: #007982;
+                background-image: url("https://www.transparenttextures.com/patterns/crisp-paper-ruffles.png");*/
+                
+                /*background-color: #c5d4db;
+                background-image: url("https://www.transparenttextures.com/patterns/argyle.png");
+                */
+                
+                background-color: #a1aab3;
+                background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+                background-color: #a1aab3;
+                background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-dark.png");
+                opacity: 1;
+                padding-right:0px;
+				padding-left:0px;
+                color:white;
+                font-size:30px;
+                font-weight:500;
+				width:100%;
+        }
+        .container-fluid{
+                padding:10%;
+
+        }
+        .img_UP,.img_DOWN{
+                width:47%;
+                height:65%;
+        }
+        .div_img{
+                text-align:right;
+                padding:0px;
+        }
+        
+        
+        #animate_tbl{
+                position: absolute;
+                top:10;
+                left:20;
+                font-size:30px;
+                margin:0%;
+                width:30%;
+				
+                opacity: 0.9;
+        }
+        #animate_tbl .RECORD_HEADER_COL{
+                padding:0;
+        }
+        /*.RECORD_PLAYER_ROW::before{
+
+                background-image:url('images/soga/up-arrow.png');
+                background-size: 10px 20px;
+                display: inline-block;
+                width: 10px; 
+                height: 20px;
+                content:"";
+        }*/
+	</style>
+	<style>
+        @import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
+        body#obs_body{
+                font-family: 'Noto Sans TC', sans-serif;
+        }
+        
+        
+        
+        .name_tag{
+                width: 200px;
+                position: absolute;
+                z-index: 2;
+        }
+        .text_name_tag{
+                position: absolute;
+                font-size: 53px;
+                color: black;
+                font-weight: bold;
+                z-index: 3;
+        }
+        .text_point_tag{
+                font-size: 30px;
+        }
+        
+   
+        #img_tag_jiang{
+                width: 600px;
+                position: absolute;
+                z-index: 2;
+                top: 20;
+                left: 1930px;
+                
+        }
+        #text_jiang{
+                font-size: 91px;
+                transform: rotate(-7deg); 
+                color: #126636;
+                font-weight: bold;
+                z-index: 3;
+                top: 22px;
+                position: absolute;
+                text-align:center;
+                width:188px;
+                left: 1911;
+        }
+        
+        
+        
+        
+        #img_tag_0{
+                top: 1365;
+                left: 1650;
+        }
+        #img_tag_1{
+                top: 350;
+                left: 2330;
+        }
+        #img_tag_2{
+                top: 20;
+                left: 550;
+        }
+        #img_tag_3{
+                top: 850;
+                left: 20;
+        }
+        
+       
+        
+        
+        
+        #tbl_record{
+                font-size:30px;
+                margin-top:15px;
+                margin-left:5px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight:bold;
+                width:500px;
+                background-color:rgba(0, 0, 0, 0.5);
+                overflow: hidden;
+                border-radius: 25px;
+                
+        }
+        #tbl_record thead
+        {
+                padding:0%;
+                text-align: center;
+        }
+        #tbl_record td
+        {
+                padding:0%;
+                text-align: center;
+                vertical-align:middle;
+                height:42px;
+        }
+        #tbl_record tr
+        { 
+                border-top:none; 
+        }
+        #tbl_record td
+        {
+           border-top:none; 
+        }
+        #tbl_record thead{
+                background-color:rgba(238, 129, 198, 0.6);
+        }
+	</style>
+       <style>
+        
+             
+        #overlay{
+                opacity: 0;
+                background-color: black;
+                width: 50%;
+                height: 50%;
+                position: absolute;
+                color:white;
+                margin:0px;
+                top:136px;
+                left:68px;
+                width:0px;
+                height :50px;
+                text-align:center;
+                border-radius: 35px;
+                border-color: #55b1e4;
+                border-width:5px;
+                border-style:solid;
+                border-collapse: collapse;
+                color:white;
+                font-size:30px;
+                z-index: 10;
+        }  
+        .popup_arrow_img{
+                transform: rotate(180deg);
+                width:51px;
+                margin-bottom:12px;
+                float:right;
+                opacity: 1;
+        }
+        #Popup_main_title{
+                border-bottom: 5px solid white;
+                height: 9%;
+        }
+               
+        .popup_a_aver{
+                font-size:28px;
+                float: right;
+                margin-top: 40px;
+        }
+        .pop_point_offset{
+                float: right;
+        }
+        .text_pop_info{
+                font-size:55px;
+                font-weight: bold;
+                margin: 0px 65px 0px 65px; /*top right bottom left*/
+                height:8%;
+                opacity: 1;
+        }
+        .cell_pop_info{
+                float:left;
+                width:282px;
+                margin: 0px;
+                height:100%;
+                /*display:block;*/
+                text-align: right;
+                border-bottom: 5px solid white;
+
+                /*border:1px;
+                border-style:solid;*/
+        }
+        .popup_odd{
+                color:#CF9E9E;
+        }  
+        .point_img{
+                
+                position:absolute;
+                width:300px;
+                opacity:0;
+
+        }
+        .point_flag{
+                display:block;
+                position:absolute;
+                opacity:0;
+                font-weight: 800;
+                font-size: 63px;
+                text-align: center;
+                width:105px;
+
+               
+        }
+        
+        </style>
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<!--<script type="text/javascript" src="myscript/js/json2.js"></script>-->
+	<!--<script type="text/javascript" src="myscript/js/global_func.js"></script>-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <script type="text/javascript" src="/static/js/common/common.js"></script>
+        <script type="text/javascript" src="/static/js/restore.js"></script>
+	<script type="text/javascript" src="/static/js/newjiang.js"></script>
+	<script type="text/javascript" src="/static/js/action.js"></script>
+        <script type="text/javascript" src="/static/js/clear_all.js"></script>
+        <script type="text/javascript" src="/static/js/clear_last.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" ></script>
+	<script>
+                test_flag=0
+                function set_popup_window_header(rank){
+                        header_str='<div class="text_pop_info" id="Popup_main_title"> ['+rank_region[rank/10-1]+'] 排行榜</div>'
+                        header_str+='<div class="text_pop_info" id="popup_tilte">'
+                        header_str+='<div class="popup_odd cell_pop_info" id="title_rank_r">'
+                        header_str+="排名"
+                        header_str+='</div>'
+                        header_str+='<div class="cell_pop_info" id="title_name">'
+                        header_str+="玩家"
+                        header_str+='</div>'
+                        header_str+='<div class="popup_odd cell_pop_info" id="title_point">'
+                        header_str+="總分"
+                        header_str+='</div>'
+                        header_str+='<div class="cell_pop_info" id="title_zhmo">'
+                        header_str+="自摸"
+                        header_str+='<a class="popup_a_aver">(平均)</a>'
+                        header_str+='</div>'
+                        header_str+='<div class="popup_odd cell_pop_info" id="title_hu">'
+                        header_str+="胡牌"
+                        header_str+='<a class="popup_a_aver">(平均)</a>'
+                        header_str+='</div>'
+                        header_str+='<div class="cell_pop_info" id="title_gun">'
+                        header_str+="放槍"
+                        header_str+='<a class="popup_a_aver">(平均)</a>'
+                        header_str+='</div>'
+                        header_str+='<div class="popup_odd cell_pop_info" id="title_bai_mo">'
+                        header_str+="被摸"
+                        header_str+='<a class="popup_a_aver">(平均)</a>'
+                        header_str+='</div>'
+                        header_str+='<div class="cell_pop_info" id="title_jiang">'
+                        header_str+="將數"
+                        header_str+='</div>'
+                        return header_str
+                }
+                function init_tag(){
+                        $('.text_point_tag').hide() //to do... current record.
+							
+                        $('.liang_img').attr('src',"/static/image/d.png").css('width','40px').css('position','absolute').hide()
+                        $('#text_fong').css('top',105).css('left','2100').css('text-align','center').css('font-size','80').css('opacity',"1").css('color','white').css('width','400px')//.css('background','green')//.css('color','#55b1e4')
+                        $("#img_tag_jiang").attr("src","/static/image/jiang.png")
+                        for(i=0;i<4;i++){
+                                //Tag and name text offset
+                                //console.log(parseInt($("#img_tag_"+i+"").css('top')))
+                                $("#text_tag_name_"+i+"").css("top",(parseInt($("#img_tag_"+i+"").css('top'))-5))
+                                $("#text_tag_name_"+i+"").css("left",(parseInt($("#img_tag_"+i+"").css('left'))+72))
+                                
+                                //Tag and point text offset
+                                $("#text_tag_point_"+i+"").css("top",(parseInt($("#img_tag_"+i+"").css('top'))-4))
+                                $("#text_tag_point_"+i+"").css("left",(parseInt($("#img_tag_"+i+"").css('left'))+215))
+                                
+                                
+                                //dice location offset
+                                for(j=1;j<=10;j++){
+                                        if(i==0){
+                                                if (j<=5){
+                                                        //console.log(parseInt($("#img_tag_"+i+"").css('top')))
+                                                        $("#img_liang_p"+i+"_"+j+"").css("top",(parseInt($("#img_tag_"+i+"").css('top'))-45))
+                                                        $("#img_liang_p"+i+"_"+j+"").css("left",(parseInt($("#img_tag_"+i+"").css('left'))-40+40*j))
+                                                }else{
+                                                        $("#img_liang_p"+i+"_"+j+"").css("top",(parseInt($("#img_tag_"+i+"").css('top'))-90))
+                                                        $("#img_liang_p"+i+"_"+j+"").css("left",(parseInt($("#img_tag_"+i+"").css('left'))-40-200+40*j))
+                                                }
+                                                                                
+                                        }else{
+                                                if (j<=5){
+                                                        $("#img_liang_p"+i+"_"+j+"").css("top",(parseInt($("#img_tag_"+i+"").css('top'))+75))
+                                                        $("#img_liang_p"+i+"_"+j+"").css("left",(parseInt($("#img_tag_"+i+"").css('left'))-40+40*j))
+                                                }else{
+                                                        $("#img_liang_p"+i+"_"+j+"").css("top",(parseInt($("#img_tag_"+i+"").css('top'))+120))
+                                                        $("#img_liang_p"+i+"_"+j+"").css("left",(parseInt($("#img_tag_"+i+"").css('left'))-40-200+40*j))
+                                                }
+                                        }
+                                }
+                        }
+                        
+                        
+                }
+                function update_name_tag(){
+                        start=parseInt(gs.start_position)
+                        for(i=0;i<4;i++){
+                                $("#img_tag_"+(start+i)%4+"").attr("src","/static/image/soga_tag"+i+".png")
+                                if(i==gs.fong_idx%4){
+                                        $("#img_tag_"+(start+i)%4+"").attr("src","/static/image/soga_tagz"+i+".png")
+                                }
+                        }
+                        gs.player_now.forEach(function(player,i){
+                                $("#text_tag_name_"+(start+i)%4+"").text(player)
+                        })
+                        gs.player_now.forEach(function(player,i){
+                                //console.log(gs['player_today_record'][player]['point'])
+                                //console.log($("#text_tag_point_"+(start+i)%4+""))
+                                $("#text_tag_point_"+(start+i)%4+"").text(gs['player_today_record'][player]['point'])
+                        })
+                }
+                function update_obs_gs(gs_from_serv){
+                        gs_from_serv=JSON.parse(gs_from_serv);  
+                        if (gs_from_serv.hasOwnProperty('log')){
+                                gs=gs_from_serv.gs;
+                        }else{
+                                gs=gs_from_serv;
+                        }
+                }
+                function update_tbl_record(){
+                        gs.player_today_record=sort_record_by_point(gs.player_today_record);
+                        $("#obs_body #tbl_record").remove()
+                        $("#obs_body").append("<table id=\"tbl_record\" class=\"table table-dark \">")
+                       
+                        str="<thead><tr>"
+                        str+="<td>玩家</td>"
+                        str+="<td>點數</td>"
+                        str+="<td>自摸</td>"
+                        str+="<td>胡牌</td>"
+                        str+="<td>放槍</td>"
+                        //str+="<td>沒事</td>"
+                        str+="<td>被摸</td>"
+                        str+="<td>將數</td></thead>"
+                        
+                        $("#obs_body #tbl_record").append(str).append('<tbody></tbody>')
+                        //$("#tbl_record thead").css('background-color',"#55b1e4").css('color',"black")
+                        //$('#tbl_record tbody tr').remove();
+                        //$('#tbl_record tbody').append('<tr></tr>');
+                        for (const [key, info] of Object.entries(gs.player_today_record)) {
+                                str='<tr id="tr_'+key+'">'
+                                str+='<td>'+key+'</td>'
+                                str+='<td>'+info.point+'</td>'
+                                str+='<td>'+info.zhmo+'</td>'
+                                str+='<td>'+info.hu+'</td>'
+                                str+='<td>'+info.gun+'</td>'
+                                //str+='<td>'+info.nothing+'</td>'
+                                str+='<td>'+info.bai_mo+'</td>'
+                                str+='<td>'+info.playjiang+'</td>'
+                                str+='</tr>'
+                                
+                                $('#tbl_record > tbody').append(str);	
+                                if(info.point>=100)
+                                        $("#tr_"+key).css("background-color","red").css("color","white");
+                                else if(info.point<=-100)
+                                        $("#tr_"+key).css("background-color","green").css("color","white");
+                        }
+                        $('#tbl_record > tbody >tr:last').addClass('last')
+                        if (gs.op.hasOwnProperty("winner")){
+                                give_color_for_winner_and_loser();
+                        }
+                        
+
+                }
+                function give_color_for_winner_and_loser(){
+                        winner=gs.op.winner;
+                        time_interval=10000;
+                        col_green="#33FF33";
+                        col_red="#930000";
+                        if(gs.op.action.lastIndexOf('CHAW')!=-1)return;
+                        
+                        $('#tbl_record tbody :contains("'+winner+'")').find('td:eq(0)').animate({color: col_red}, 'slow').delay(time_interval).animate({color: "white"}, 'slow');//name
+                        $('#tbl_record tbody :contains("'+winner+'")').find('td:eq(1)').animate({color: col_red}, 'slow').delay(time_interval).animate({color: "white"}, 'slow');//point
+                        
+                        if(gs.op.action.lastIndexOf('ZHMO')!=-1 ){
+                                //自摸
+                                $('#tbl_record tbody :contains("'+winner+'")').find('td:eq(2)').animate({color: col_red}, 'slow').delay(time_interval).animate({color: "white"}, 'slow')
+                                gs.player_now.forEach(function(player){
+                                        if (player != winner){
+                                                $('#tbl_record tbody :contains("'+player+'")').find('td:eq(0)').animate({color: col_green}, 'slow').delay(time_interval).animate({color: "white"}, 'slow');
+                                                $('#tbl_record tbody :contains("'+player+'")').find('td:eq(1)').animate({color: col_green}, 'slow').delay(time_interval).animate({color: "white"}, 'slow'); 
+                                                $('#tbl_record tbody :contains("'+player+'")').find('td:eq(5)').animate({color: col_green}, 'slow').delay(time_interval).animate({color: "white"}, 'slow');
+
+                                        }
+                                });
+                        }else{
+                                //胡牌
+                                $('#tbl_record tbody :contains("'+winner+'")').find('td:eq(3)').animate({color: col_red}, 'slow').delay(time_interval).animate({color: "white"}, 'slow');//point
+                                $('#tbl_record tbody :contains("'+gs.op.loser+'")').find('td:eq(0)').animate({ color: col_green}, 'slow').delay(time_interval).animate({color: "white"}, 'slow');
+                                $('#tbl_record tbody :contains("'+gs.op.loser+'")').find('td:eq(1)').animate({ color: col_green}, 'slow').delay(time_interval).animate({color: "white"}, 'slow');
+                                $('#tbl_record tbody :contains("'+gs.op.loser+'")').find('td:eq(4)').animate({ color: col_green}, 'slow').delay(time_interval).animate({color: "white"}, 'slow');
+                        }
+                        
+                }
+                function update_jiang(){
+                        $("#text_jiang").text(gs.jiang)
+                         
+                }
+                function update_fong(){
+                        var arr
+                        if (gs.circle==4){
+                                arr=FONG
+                        }else if (gs.circle==2){
+                                arr=TWOFONG
+                        }else{
+                                arr=FONG
+                        }
+                        //console.log(arr)
+                        if (gs.fong_idx==gs.circle*4){
+                                $('#text_fong').text("第"+gs.jiang+"結束") 
+                                
+                        }else{
+                                status=gs.fong_idx%(gs.circle*4)
+                                $('#text_fong').text(arr[status])
+                                if (gs.liang>0){
+                                        $("#text_fong").text(arr[status]+" 連"+gs.liang)
+                                }
+                        }
+                        
+                        /*
+                        if (gs.circle==4){
+                                $('#text_fong').text(FONG[gs.fong_idx%(gs.circle*4)])
+                                
+                        }else if (gs.circle==2){
+                                $('#text_fong').text(TWOFONG[gs.fong_idx%(gs.circle*4)])
+                                if (gs.liang>0){
+                                        $("#text_fong").text(TWOFONG[gs.fong_idx%(gs.circle*4)]+" 連"+gs.liang)
+                                }
+                        }*/
+                       
+                }
+                function show_liang_dice(){
+                        $('.liang_img').hide()
+                        position=(parseInt(gs.fong_idx%4)+parseInt(gs.start_position))%4
+                        if (gs.liang>0){
+                                for(i=1;i<=gs.liang;i++){
+                                        
+                                        console.log(position)
+                                        $("#img_liang_p"+position+"_"+i).show()
+                                }
+                        }
+                        
+                }
+                function update_OBS(gs_from_serv){
+                        update_obs_gs(gs_from_serv);
+                        update_name_tag();
+                        update_tbl_record(); //bootstrap table
+                        update_jiang();
+                        update_fong();
+                        show_liang_dice();
+                        //if (test_flag==1)
+                        //if(gs.op.hasOwnProperty('action') && gs.op.action.indexOf('new')==-1)
+                        //       show_point_animate();
+                        show_popup_window()
+			
+                }
+                function show_point_animate(){
+                        console.log(gs)
+                        var col_red_money_bag="	#CE0000";
+                        var col_green_money_bag="#00A600";
+                        /*金幣袋 money bag png*/
+                        $("#point_flag_0").css("top",(parseInt($("#img_tag_0").css('top'))+85)).css("left",(parseInt($("#img_tag_0").css('left'))+55));
+                        $("#point_img_0").css("top",(parseInt($("#img_tag_0").css('top'))-60)).css("left",(parseInt($("#img_tag_0").css('left'))-45));
+                        $("#point_flag_1").css("top",(parseInt($("#img_tag_1").css('top'))-5)).css("left",(parseInt($("#img_tag_1").css('left'))+55));
+                        $("#point_img_1").css("top",(parseInt($("#img_tag_1").css('top'))-150)).css("left",(parseInt($("#img_tag_1").css('left'))-45));
+                        $("#point_flag_2").css("top",(parseInt($("#img_tag_2").css('top'))-65)).css("left",(parseInt($("#img_tag_2").css('left'))+55));
+                        $("#point_img_2").css("top",(parseInt($("#img_tag_2").css('top'))-210)).css("left",(parseInt($("#img_tag_2").css('left'))-45));
+                        $("#point_flag_3").css("top",(parseInt($("#img_tag_3").css('top'))-5)).css("left",(parseInt($("#img_tag_3").css('left'))+45));
+                        $("#point_img_3").css("top",(parseInt($("#img_tag_3").css('top'))-150)).css("left",(parseInt($("#img_tag_3").css('left'))-45));
+                        for (i=0;i<4;i++){
+                                switch(i){
+                                        case 0:
+                                                top_offset=+200;
+                                                left_offset=0;
+                                                break;
+                                        case 1:
+                                                top_offset=0;
+                                                left_offset=200;
+                                                break;
+                                        case 2:
+                                                top_offset=-200;
+                                                left_offset=0;
+                                                break;
+                                        case 3:
+                                                top_offset=0;
+                                                left_offset=-180;
+                                                break;
+                                }
+                                p=gs.op.point[gs.player_now[(i-gs.start_position+4)%4]];
+                                if (p>0){
+                                        $("#point_flag_"+i+"").text("+"+p).css("color",col_red_money_bag);
+                                }else if(p<0) {
+                                        $("#point_flag_"+i+"").text(p).css("color",col_green_money_bag);
+                                }else{
+                                        continue;
+                                }
+                                /*move number*/
+                                flag_tmp_top=Number($("#point_flag_"+i+"").css("top").replace("px", ""));
+                                flag_tmp_left=Number($("#point_flag_"+i+"").css("left").replace("px", ""));
+                                $("#point_flag_"+i).animate({ opacity: 1, top: flag_tmp_top-top_offset+"px",left:flag_tmp_left-left_offset+"px" }, 'slow').delay(5000).animate({ opacity: 0 , top: flag_tmp_top+"px", left: flag_tmp_left+"px"}, 'slow');      
+                                
+                                /*move img*/
+                                img_tmp_top=Number($("#point_img_"+i+"").css("top").replace("px", ""));
+                                img_tmp_left=Number($("#point_img_"+i+"").css("left").replace("px", ""));
+                                $("#point_img_"+i).animate({ opacity: 1, top: img_tmp_top-top_offset+"px",left:img_tmp_left-left_offset+"px" }, 'slow').delay(5000).animate({ opacity: 0 , top: img_tmp_top+"px", left: img_tmp_left+"px"}, 'slow');      
+                        
+                        }
+                }
+                function stop_point_animate(){
+                        for (i=0;i<4;i++){
+                                tmp_top=Number($("#point_flag_"+i+"").css("top").replace("px", ""));
+                                $("#point_flag_"+i+"").css('opacity',0).css('top',tmp_top+"px");
+                                $("#point_img_"+i+"").css('opacity',0).css('top',tmp_top+"px");
+                        }
+                }
+                function update_animate_tbl(){
+                        Create_first_record()
+                }
+                var img_UP='static/image/soga/up-arrow.png';
+                var img_DOWN='static/image/soga/down-arrow.png';
+                function Create_first_record(){
+                        var i=1;
+                        console.log(gs.player_today_record)
+                        $('.RECORD_PLAYER_COL').remove()
+                        gs.player_today_record=sort_record_by_point(gs.player_today_record);
+                        $.each(gs.player_today_record, function(key, val) {
+                                console.log(key)
+                                str="<div name="+key+" id='RECORD_"+key+"_ROW'  class='row RECORD_PLAYER_ROW ' value="+val.new_rank+">"
+
+                                str+="<div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+key+"_COL_PLAYER' >"
+                                str+="<a id='text_"+val.name+"_name'>"+key+"</a>"
+                                str+="</div>"
+                                str+="<div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+key+"_COL_POINT' >"
+                                str+="<a id='text_"+val.name+"_point'>"+val.point+"</a>"
+                                str+="</div>"
+                                str+="<div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+key+"_COL_ZHMO' >"
+                                str+="<a id='text_"+val.name+"_zhmo'>"+val.zhmo+"</a>"
+                                str+="</div>"
+                                str+="<div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+key+"_COL_HU' >"
+                                str+="<a id='text_"+val.name+"_hu'>"+val.hu+"</a>"
+                                str+="</div>"
+                                str+="<div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+key+"_COL_GUN' >"
+                                str+="<a id='text_"+val.name+"_gun'>"+val.gun+"</a>"
+                                str+="</div>"
+                                str+="<div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+key+"_COL_BAI_MO' >"
+                                str+="<a id='text_"+val.name+"_gun'>"+val.bai_mo+"</a>"
+                                str+="</div>"
+                                str+="<div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+key+"_COL_NOTHING' >"
+                                str+="<a id='text_"+val.name+"_gun'>"+val.nothing+"</a>"
+                                str+="</div>"
+                                str+="<div class='col-md-1 RECORD_PLAYER_COL' id='RECORD_"+key+"_COL_JIANG' >"
+                                str+="<a id='text_"+val.name+"_playjiang'>"+val.playjiang+"</a>"
+                                str+="</div>"
+                                str+="<div class='col-md-1 div_img'>"
+                                str+="<img class='img_UP' src='"+img_UP+"'></img>"
+                                str+="<img class='img_DOWN' src='"+img_DOWN+"'></div>"
+                                str+="</div>"
+                                $('.row:last').after(str);
+
+                                $('.img_DOWN,.img_UP').hide()
+                                //update_table();
+                                $("div[name='"+key+"']").hide();
+                                $("div[name='"+key+"']").fadeIn();
+                                /*setTimeout(function(){
+                                $("div[name='"+key+"']").fadeIn();
+                                },i*200);
+                                i++;*/
+                        });
+                        
+                        
+                }
+                function Initial_record_table(){
+                        $("#obs_body").append('<div id="animate_tbl" class=""></div>')
+                        
+                        str="<div id='RECORD_HEADER_ROW'  class='row'>"
+                        str+="<div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_PLAYER' >玩家</div>"
+                        str+="<div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_POINT' >計分</div>"
+                        str+="<div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_ZHMO' >自摸</div>"
+                        str+="<div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_HU' >胡牌</div>"
+                        str+="<div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_GUN' >放槍</div>"
+                        str+="<div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_GUN' >被摸</div>"
+                        str+="<div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_GUN' >沒事</div>"
+                        str+="<div class='col-md-1 RECORD_HEADER_COL' id='RECORD_HEADER_COL_JIANG' >圈數</div>"
+                        str+="<div class='col-md-1 div_img'></div></div>"
+                        $('#animate_tbl').append(str);
+                }
+                var gs	
+                var popup_record_color
+                var col_green = "#007500";
+                var col_red = "#CC0000";
+                var socket = io.connect('http://' + document.domain + ':' + location.port);
+                $( document ).ready(function() {
+                        init_tag();
+                        request_restore();
+                        socket_init_obs();
+                });
+                function set_record_color(data_arr_from_DB){
+                        //console.log(gs)
+                        popup_record_color=[0,0,0,0,0,0,0,0,0,0]
+                        for (player in gs.player_today_record){
+                                //console.log(player)
+                                for(i=0;i<data_arr_from_DB.length;i++){
+                                        if(data_arr_from_DB[i].indexOf(player)!=-1){
+                                                break
+                                        }
+                                }
+                                if(i<10 && i<data_arr_from_DB.length){
+                                        if (gs.player_today_record[player].point>=0){
+                                                //console.log("set "+player+" rank "+(i+1)+ " as green");
+                                                popup_record_color[i]=1
+                                                if(gs.player_today_record[player].point>=100)
+                                                        popup_record_color[i]=2
+                                        }else if (gs.player_today_record[player].point<0){
+                                                //console.log("set "+player+" rank "+(i+1)+ " as ");
+                                                popup_record_color[i]=-1;
+                                                if(gs.player_today_record[player].point<=-100)
+                                                        popup_record_color[i]=-2
+                                        }
+                                }else{
+                                        //console.log("set "+player+" rank "+(i+1)+ " as unknown");
+                                }
+                        }
+                }
+                function DBdata_add_today_player(data_arr_from_DB){
+                        for (player in gs.player_today_record){
+                                for(i=0;i<data_arr_from_DB.length;i++){
+                                        if(data_arr_from_DB[i].indexOf(player)!=-1){
+                                                //console.log(i)
+                                                break
+                                        }
+                                }
+                                if (i<data_arr_from_DB.length){
+                                        console.log(player+ "原本在第" +(i+1)+"名")
+                                        data_arr_from_DB[i][2]+=gs.player_today_record[player].point
+                                        data_arr_from_DB[i][3]+=gs.player_today_record[player].zhmo
+                                        data_arr_from_DB[i][5]+=gs.player_today_record[player].hu
+                                        data_arr_from_DB[i][4]+=gs.player_today_record[player].gun
+                                        data_arr_from_DB[i][6]+=gs.player_today_record[player].bai_mo
+                                        data_arr_from_DB[i][7]+=gs.player_today_record[player].playjiang 
+                                        
+                                }else{
+                                        console.log("No record in DB about "+player)
+                                        n=player
+                                        p=gs.player_today_record[player].point
+                                        z=gs.player_today_record[player].zhmo
+                                        h=gs.player_today_record[player].hu
+                                        g=gs.player_today_record[player].gun
+                                        b=gs.player_today_record[player].bai_mo
+                                        pj=gs.player_today_record[player].playjiang 
+                                        data_arr_from_DB.push([0,n,p,z,g,h,b,pj])
+                                }
+                                
+                        }
+                        return data_arr_from_DB
+                }
+                var switch_flag_for_popup=0;
+                //var rank_region=["傳說","大師","高手","凡人","新手","??"]
+                var rank_region=["這些是鬼","好像很猛","嫩逼專區","衰人地獄","??","??"]
+                function update_popup_info(DBdata,rank,Frist_update){
+                        DBdata = DBdata.filter(function(v,i,a){return v[7]>20 || gs.player_today_record.hasOwnProperty(v[1])});
+                        console.log(DBdata);
+                        if(Frist_update==1){
+                                data_unsort=DBdata_add_today_player(DBdata);
+                                data_point_sorted=data_unsort.sort(sort_popup_info_point).reverse();
+                                //set_record_color(data_point_sorted);
+                        }      
+                        else{
+                                data_point_sorted=DBdata;
+                        }
+                        
+
+                        /*Get Color array
+                                2 漲停板
+                                1 漲
+                                0 沒變
+                                -1跌
+                                -2跌停板
+                        */
+                        if (rank==10){
+                                //1~10名
+                                set_record_color(data_point_sorted)
+                        }else if(rank >10){
+                                //11名以後
+                                tmp=Array.from(data_point_sorted)
+                                tmp=tmp.splice(rank-10)
+                                set_record_color(tmp);
+                                console.log(tmp)
+                        }
+
+                        //清空popup window
+                        $('#overlay').empty();
+
+                        //Set Header
+                        header_str=set_popup_window_header(rank)
+                        $('#overlay').append(header_str)
+
+
+                        if (Frist_update==1)
+                                $("#Popup_main_title,#popup_tilte").hide().delay(6000).animate({height:'toggle'},450);
+                        else
+                                $("#Popup_main_title,#popup_tilte").hide().animate({height:'toggle'},450);
+                       
+                        
+                        data_point_sorted.forEach(function(d, idx){      
+                                if ((rank-10)<=idx && idx<rank){
+                                        divstr='<div class="text_pop_info" id="r_'+idx+'">'      
+                                        divstr+='<div class="popup_odd cell_pop_info" id="rank_r_'+idx+'">'
+                                        divstr+=idx+1
+                                        divstr+='</div>'
+                                        divstr+='<div class="cell_pop_info" id="name_r_'+idx+'">'
+                                        divstr+=d[1]
+                                        divstr+='</div>'
+                                        divstr+='<div class="popup_odd cell_pop_info" id="point_r_'+idx+'">'
+                                        divstr+=d[2]
+                                        divstr+='</div>'
+                                        divstr+='<div class="cell_pop_info" id="zhmo_r_'+idx+'">'
+                                        divstr+='<a class="popup_a_aver">('+(d[3]/d[7]).toFixed(2)+')</a>'
+                                        divstr+=d[3]
+                                        divstr+='</div>'
+                                        divstr+='<div class="popup_odd cell_pop_info" id="hu_r_'+idx+'">'
+                                        divstr+='<a class="popup_a_aver">('+(d[5]/d[7]).toFixed(2)+')</a>'
+                                        divstr+=d[5]
+                                        divstr+='</div>'
+                                        divstr+='<div class="cell_pop_info" id="gun_r_'+idx+'">'
+                                        divstr+='<a class="popup_a_aver">('+(d[4]/d[7]).toFixed(2)+')</a>'
+                                        divstr+=d[4]
+                                        divstr+='</div>'
+                                        divstr+='<div class="popup_odd cell_pop_info" id="bai_mo_r_'+idx+'">'
+                                        divstr+='<a class="popup_a_aver">('+(d[6]/d[7]).toFixed(2)+')</a>'
+                                        divstr+=d[6]
+                                        divstr+='</div>'
+                                        divstr+='<div class="cell_pop_info" id="jiang_r_'+idx+'">'
+                                        divstr+=d[7]
+                                        divstr+='</div>'
+                                        divstr+='</div>'
+                                        $('#overlay').append(divstr)
+                                        
+                                        if(popup_record_color[(idx%10)]>=1){
+                                                console.log(d[1]);
+                                                console.log(gs.player_today_record);
+                                                
+                                                $("#point_r_"+idx).html('<div style="text-align:left;float:left;margin-top:28px"><img class="popup_arrow_img" src="'+img_DOWN+'"></img></div><div style="width:100%"><a class="popup_a_aver pop_point_offset">(+'+gs.player_today_record[d[1]].point+')</a>'+d[2]+'</div>')
+                                                $("#r_"+idx+" div").css('color',col_red);
+                                                if(popup_record_color[(idx%10)]>=2){
+                                                        $("#r_"+idx+" div").css('background-color',"red").css("color","white");
+                                                }
+                                        }else if (popup_record_color[(idx%10)]<=-1){
+                                                $("#point_r_"+idx).html('<div style="text-align:left;float:left;margin-top:28px"><img class="popup_arrow_img" src="'+img_UP+'"></img></div><div style="width:100%"><a class="popup_a_aver pop_point_offset">('+gs.player_today_record[d[1]].point+')</a>'+d[2]+'</div>')
+                                                $("#r_"+idx+" div").css('color',col_green);
+                                                if(popup_record_color[(idx%10)]<=-2){
+                                                        $("#r_"+idx+" div").css('background-color',"green").css("color","white");
+                                                }
+                                        }
+                                }
+                                $("#r_"+idx+"").hide();
+                                
+                                update_time=13000
+                                if(Frist_update==1)
+                                        $("#r_"+idx+"").delay(6500).delay((idx-rank+10)*200).animate({width:'toggle'},450);
+                                else{
+                                        $("#r_"+idx+"").delay(500).delay((idx-rank+10)*200).animate({width:'toggle'},450);
+                                }        
+                                if (data_point_sorted.length<=10)return
+                                
+                                if(gs.fong_idx==16 && idx==(data_point_sorted.length-1)){
+                                        
+                                        if(data_point_sorted.length<=rank){
+                                                //Last page,back to first page.
+                                                console.log("back to 10")
+                                                if(Frist_update==1){
+                                                        console.log("first")
+                                                        setTimeout(function () {update_popup_info(data_point_sorted,10,0)},(2*update_time))
+                                                } 
+                                                else{
+                                                        console.log("not first")
+                                                        setTimeout(function () {update_popup_info(data_point_sorted,10,0)},update_time)
+                                                }
+                                                       
+                                        }else{
+                                                // still have next page.
+                                                console.log("rank="+rank)
+                                                tmp_ran=0;
+                                                if(Frist_update==1){
+                                                        console.log("First rank+10")
+                                                        tmp_rank=rank+10
+                                                        setTimeout(function () {update_popup_info(data_point_sorted,tmp_rank,0);},(1.5)*update_time)
+                                                } 
+                                                else{
+                                                        console.log("rank+10")
+                                                        tmp_rank=rank+10
+                                                        setTimeout(function () {update_popup_info(data_point_sorted,tmp_rank,0)},update_time)
+                                                }
+                                                
+                                        }
+                                }
+                        });
+                        //setTimeout(update_popup_info(pop_info,20),10000)
+                }
+                function popup_get_show_info(){
+                        send_to_server('get_popup_window_info','{"data":"0"}')
+                        //Send to Server to get info, then go to update_popup_info
+                }
+		function show_popup_window(){
+                        popup_get_show_info()
+                        
+                        if($("#overlay").css("opacity")=="0" && gs.fong_idx==16){
+                                $("#tbl_record").delay(4000).animate({ opacity: 0 }, 'slow',function(){
+                                        $("#overlay").animate({width:"2400px",opacity :"0.9"}, 1000, 'linear').animate({height :"1200px"},'slow');
+                                });
+                                return
+                        }
+                        else if ($("#overlay").css("opacity")=="0.9"  && gs.fong_idx!=16){
+
+                                $("#overlay").animate({height:"50"},'slow').animate({width :"0px",opacity :"0"},'slow');
+                                
+                        }
+                        /*#overlay{
+                                display:block;
+                                opacity:0;
+                                position:absolute;
+                                margin:0px;
+                                top:136px;
+                                left:250px;
+                                //width:2055px;
+                                //height :1200px
+                        }
+                        #overlay{
+                                display:block;
+                                opacity:0;
+                                position:absolute;
+                                margin:0px;
+                                top:136px;
+                                left:250px;
+                                width:0px;
+                                height :50px;
+                        }
+                        }*/
+                }	
+	</script>
+</head>
+<body id="obs_body">
+        
+        <div class="container">
+                <img id='point_img_0' class="point_img" src='/static/image/coin.png'></img>
+                <div id='point_flag_0' class=" point_flag">我是東</div>
+                <img loc="bottom" id="img_tag_0" src="" class="name_tag"></img>
+                <div id="text_tag_name_0" class='text_name_tag'></div>
+                <div id="text_tag_point_0" class='text_name_tag text_point_tag'></div>
+                <img loc="bottom" id="img_liang_p0_1"  src="" class="liang_img"></img>
+                <img loc="bottom" id="img_liang_p0_2"  src="" class="liang_img"></img>
+                <img loc="bottom" id="img_liang_p0_3"  src="" class="liang_img"></img>
+                <img loc="bottom" id="img_liang_p0_4"  src="" class="liang_img"></img>
+                <img loc="bottom" id="img_liang_p0_5"  src="" class="liang_img"></img>
+                <img loc="bottom" id="img_liang_p0_6"  src="" class="liang_img"></img>
+                <img loc="bottom" id="img_liang_p0_7"  src="" class="liang_img"></img>
+                <img loc="bottom" id="img_liang_p0_8"  src="" class="liang_img"></img>
+                <img loc="bottom" id="img_liang_p0_9"  src="" class="liang_img"></img>
+                <img loc="bottom" id="img_liang_p0_10" src="" class="liang_img"></img>
+        </div>
+        <div class="container">
+                <img id='point_img_1' class="point_img" src='/static/image/coin.png'></img>
+                <div id='point_flag_1' class=" point_flag">我是南</div>
+                <img loc="right" id="img_tag_1"  src="" class="name_tag"></img>     
+                <div id="text_tag_name_1" class='text_name_tag'></div>
+                <div id="text_tag_point_1" class='text_name_tag text_point_tag'></div>
+                <img loc="right" id="img_liang_p1_1"  src="" class="liang_img"></img>
+                <img loc="right" id="img_liang_p1_2"  src="" class="liang_img"></img>
+                <img loc="right" id="img_liang_p1_3"  src="" class="liang_img"></img>
+                <img loc="right" id="img_liang_p1_4"  src="" class="liang_img"></img>
+                <img loc="right" id="img_liang_p1_5"  src="" class="liang_img"></img>
+                <img loc="right" id="img_liang_p1_6"  src="" class="liang_img"></img>
+                <img loc="right" id="img_liang_p1_7"  src="" class="liang_img"></img>
+                <img loc="right" id="img_liang_p1_8"  src="" class="liang_img"></img>
+                <img loc="right" id="img_liang_p1_9"  src="" class="liang_img"></img>
+                <img loc="right" id="img_liang_p1_10" src="" class="liang_img"></img>
+        </div>
+        <div class="container">
+                <img id='point_img_2'class="point_img" src='/static/image/coin.png'></img>
+                <div id='point_flag_2' class=" point_flag">我是西</div>
+                <img loc="top" id="img_tag_2"    src="" class="name_tag"></img> 
+                <div id="text_tag_name_2" class='text_name_tag'></div>
+                <div id="text_tag_point_2" class='text_name_tag text_point_tag'></div>
+                <img loc="top" id="img_liang_p2_1"  src="" class="liang_img"></img>
+                <img loc="top" id="img_liang_p2_2"  src="" class="liang_img"></img>
+                <img loc="top" id="img_liang_p2_3"  src="" class="liang_img"></img>
+                <img loc="top" id="img_liang_p2_4"  src="" class="liang_img"></img>
+                <img loc="top" id="img_liang_p2_5"  src="" class="liang_img"></img>
+                <img loc="top" id="img_liang_p2_6"  src="" class="liang_img"></img>
+                <img loc="top" id="img_liang_p2_7"  src="" class="liang_img"></img>
+                <img loc="top" id="img_liang_p2_8"  src="" class="liang_img"></img>
+                <img loc="top" id="img_liang_p2_9"  src="" class="liang_img"></img>
+                <img loc="top" id="img_liang_p2_10" src="" class="liang_img"></img>
+        </div>
+        <div class="container">
+                <img id='point_img_3' class="point_img" src='/static/image/coin.png'></img>
+                <div id='point_flag_3' class=" point_flag">我是北</div>
+                <img loc="left" id="img_tag_3"   src="" class="name_tag"></img>
+                <div id="text_tag_name_3" class='text_name_tag '></div>
+                <div id="text_tag_point_3" class='text_name_tag text_point_tag'></div>
+                <img loc="left" id="img_liang_p3_1"  src="" class="liang_img"></img>
+                <img loc="left" id="img_liang_p3_2"  src="" class="liang_img"></img>
+                <img loc="left" id="img_liang_p3_3"  src="" class="liang_img"></img>
+                <img loc="left" id="img_liang_p3_4"  src="" class="liang_img"></img>
+                <img loc="left" id="img_liang_p3_5"  src="" class="liang_img"></img>
+                <img loc="left" id="img_liang_p3_6"  src="" class="liang_img"></img>
+                <img loc="left" id="img_liang_p3_7"  src="" class="liang_img"></img>
+                <img loc="left" id="img_liang_p3_8"  src="" class="liang_img"></img>
+                <img loc="left" id="img_liang_p3_9"  src="" class="liang_img"></img>
+                <img loc="left" id="img_liang_p3_10" src="" class="liang_img"></img>
+        </div>
+        <div class="container">
+                <img loc="left" id="img_tag_jiang"   src="" class="jiang_tag"></img>
+                <div id="text_jiang"></div>   
+        </div>
+        <div class="container">
+                <!--<img loc="left" id="img_tag_jiang"   src="" class="jiang_tag"></img>-->
+                <div id="text_fong" class="text_name_tag"></div>   
+        </div>
+        <!--<div class="container-fluid">
+          
+        </div>-->
+        <div id="overlay"></div>
+</body>
+</html>
